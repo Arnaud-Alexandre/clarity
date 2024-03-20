@@ -18,5 +18,8 @@ export default function(): Core.Config {
         ],
         fraud: true,
         checksum: [],
+        liveSignalsActionConfigs: new Map<string, string>(),
+        liveSignalsActionType: null,
+        liveSignalsCustomAction: (): void => { },
     };
 }

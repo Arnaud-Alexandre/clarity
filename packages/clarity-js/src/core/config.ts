@@ -18,7 +18,10 @@ let config: Config = {
     fallback: null,
     upgrade: null,
     action: null,
-    dob: null
+    dob: null,
+    liveSignalsActionConfigs: new Map<string, string>(),
+    liveSignalsActionType: null,
+    liveSignalsCustomAction: null
 };
 
 export default config;

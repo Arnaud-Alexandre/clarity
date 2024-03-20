@@ -51,7 +51,17 @@ export function config(override: Config): boolean {
     // Process custom configuration overrides, if available
     if (override === null || status) { return false; }
     for (let key in override) {
-        if (key in configuration) { configuration[key] = override[key]; }
+        if (key in configuration) { 
+            if (key === "liveSignalsCustomAction") { 
+                // Check if there are some configs sent by the client
+                let liveSignalsConfigs: string = ('liveSignalsActionConfigs' in override)? "variables = override['liveSignalsActionConfigs'];" : "";
+                // This way, the client can use their parameters in their custom action through variables["keyName"]
+                let liveSignalsCustomCode: string = String(override[key]).replace(/\n/g, "\\n");;
+                configuration[key] = eval("() => {" + liveSignalsConfigs + liveSignalsCustomCode + "}");
+                continue; 
+            }
+            configuration[key] = override[key]; 
+        }
     }
     return true;
 }

@@ -8,6 +8,7 @@ export interface MetadataCallbackOptions {
     callback: MetadataCallback,
     wait: boolean
 }
+export type SignalCallback = (data: ClaritySignal) => void;
 
 /* Enum */
 export const enum Event {
@@ -277,6 +278,7 @@ export const enum Constant {
     End = "END",
     Upgrade = "UPGRADE",
     Action = "ACTION",
+    Signal = "SIGNAL",
     Extract = "EXTRACT",
     UserHint = "userHint",
     UserType = "userType",
@@ -315,6 +317,15 @@ export const enum XMLReadyState {
     Headers_Recieved = 2,
     Loading = 3,
     Done = 4
+}
+
+/* Live Signals */
+
+export const enum LiveSignalsActionType {
+    NoAction = 0,
+    CustomAction = 1,
+    ContactUsDialogueBox = 2,
+    ContactUsAlert = 3
 }
 
 /* Helper Interfaces */
@@ -442,4 +453,10 @@ export interface UploadData {
     sequence: number;
     attempts: number;
     status: number;
+}
+
+export interface ClaritySignal {
+    type: string
+    timestamp?: number
+    value?: number
 }
