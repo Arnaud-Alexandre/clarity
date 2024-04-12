@@ -4,10 +4,11 @@ import { bind } from "@src/core/event";
 import encode from "./encode";
 
 export let data: ResizeData;
+let debounceTimeoutId: number;
 
 export function start(): void {
-    bind(window, "resize", recompute);
-    recompute();
+  bind(window, "resize", debounce(recompute, 500));
+  recompute();
 }
 
 function recompute(): void {
@@ -22,9 +23,19 @@ function recompute(): void {
 }
 
 export function reset(): void {
-    data = null;
+  data = null;
+  if(debounceTimeoutId){
+      clearTimeout(debounceTimeoutId);
+  }
 }
 
 export function stop(): void {
-    reset();
+  reset();
+}
+
+export function debounce(callback: Function, delay: number) {
+    return function () {
+      clearTimeout(debounceTimeoutId);
+      debounceTimeoutId = setTimeout(callback, delay);
+    };
 }
